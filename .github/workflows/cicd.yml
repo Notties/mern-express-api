@@ -14,7 +14,7 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}     
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USER }}/nodejs-app  .
+        run: docker build -t ${{ secrets.DOCKER_USER }}/mern-node-app  .
       - name: Publish Image to docker hub
         run: docker push ${{ secrets.DOCKER_USER }}/mern-node-app:latest 
  
@@ -25,6 +25,6 @@ jobs:
       - name: Pull image from docker hub
         run: docker pull ${{ secrets.DOCKER_USER }}/mern-node-app:latest 
       - name: Delete old container
-        run: docker rm -f nodejs-app-container  
+        run: docker rm -f mern-node-app-container  
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name nodejs-app-container -e DB_NAME='${{ secrets.DB_NAME }}' -e DB_URI='${{ secrets.DB_URI }}' ${{ secrets.DOCKER_USER }}/nodejs-app
+        run: docker run -d -p 4000:4000 --name mern-node-app-container -e DB_NAME='${{ secrets.DB_NAME }}' -e DB_URI='${{ secrets.DB_URI }}' ${{ secrets.DOCKER_USER }}/mern-node-app
