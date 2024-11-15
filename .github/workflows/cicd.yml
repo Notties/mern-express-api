@@ -3,7 +3,7 @@ name: Deploy Node Application
 on: 
   push:
     branches:
-      - mern-ec2-docker
+      - main
 
 jobs:
   build:
@@ -16,15 +16,15 @@ jobs:
       - name: Build Docker Image
         run: docker build -t ${{ secrets.DOCKER_USER }}/nodejs-app  .
       - name: Publish Image to docker hub
-        run: docker push ${{ secrets.DOCKER_USER }}/nodejs-app:latest 
+        run: docker push ${{ secrets.DOCKER_USER }}/mern-node-app:latest 
  
   deploy:
     needs: build
     runs-on: self-hosted 
     steps:
       - name: Pull image from docker hub
-        run: docker pull ${{ secrets.DOCKER_USER }}/nodejs-app:latest 
+        run: docker pull ${{ secrets.DOCKER_USER }}/mern-node-app:latest 
       - name: Delete old container
         run: docker rm -f nodejs-app-container  
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' integrationninjas/nodejs-app
+        run: docker run -d -p 4000:4000 --name nodejs-app-container -e DB_NAME='${{ secrets.DB_NAME }}' -e DB_URI='${{ secrets.DB_URI }}' ${{ secrets.DOCKER_USER }}/nodejs-app
