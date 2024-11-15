@@ -61,6 +61,6 @@ app.get("/getUsers", async (_, res) => {
   }
 });
 
-app.listen(port, function () {
+app.listen(port, '0.0.0.0', function () {
   console.log(`listening at port: ${port}\nvisit: http://localhost:${port}`);
 });
