@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import config from "./config.js";
 import db from "./mongoC.js";
 
-const port = config.PORT;
+const port = config.PORT || 4000;
 const app = express();
 
 app.use((_req, res, next) => {
